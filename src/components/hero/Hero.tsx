@@ -1,195 +1,473 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 
 const slides = [
   {
     id: 1,
-    title: "Dubay Şokoladı",
-    subtitle: "100% təbii püstə kremi və xırtıldayan kadayıfın Belçika şokoladı ilə mükəmməl rəqsi.",
+    tag: "Bestseller",
+    t1: "Dubay",
+    t2: "Şokoladı",
+    sub: "100% təbii püstə kremi və xırtıldayan kadayıfın Belçika şokoladı ilə mükəmməl rəqsi.",
     video: "/assets/videos/dubai chokolot.mp4",
-    overlayColor: "rgba(240, 244, 241, 0.8)", // bg-[#F0F4F1]
+    pill: "Yeni",
+    accent: "#B8977E",
   },
   {
     id: 2,
-    title: "Çiyələk Möcüzəsi",
-    subtitle: "Gününüzü xüsusi edəcək təzə giləmeyvə və premium şokoladın ahəngi.",
+    tag: "Yeni Kolleksiya",
+    t1: "Çiyələk",
+    t2: "Möcüzəsi",
+    sub: "Gününüzü xüsusi edəcək təzə giləmeyvə və premium şokoladın ahəngi.",
     video: "/assets/videos/ciyelek.mp4",
-    overlayColor: "rgba(253, 246, 247, 0.8)", // bg-[#FDF6F7]
+    pill: "Sezonal",
+    accent: "#C4607A",
   },
   {
     id: 3,
-    title: "Eksklüziv Hədiyyələr",
-    subtitle: "Sevdiklərinizi unudulmaz premium ləzzətlərlə təəccübləndirin.",
+    tag: "Premium Seçim",
+    t1: "Eksklüziv",
+    t2: "Hədiyyələr",
+    sub: "Sevdiklərinizi unudulmaz premium ləzzətlərlə təəccübləndirin.",
     video: "/assets/videos/hediye.mp4",
-    overlayColor: "rgba(252, 250, 239, 0.8)", // bg-[#FCFAEF]
+    pill: "Limitəd",
+    accent: "#B8977E",
   },
 ];
 
-const SMOOTH_EASING = [0.16, 1, 0.3, 1] as const;
-const SLOW_TRANSITION = { duration: 1.4, ease: SMOOTH_EASING };
-const MEDIUM_TRANSITION = { duration: 0.8, ease: SMOOTH_EASING };
-const BG_TRANSITION = { duration: 1.5, ease: "easeInOut" as const };
-
 export default function Hero() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [cur, setCur] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const videoRefs = useRef([]);
 
+  const goTo = (idx) => {
+    if (idx === cur) return;
+    setVisible(false);
+    setProgress(0);
+    setTimeout(() => {
+      setCur(idx);
+      setVisible(true);
+    }, 280);
+  };
+
+  // Track active video progress and auto-advance on end
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+    const vid = videoRefs.current[cur];
+    if (!vid) return;
+
+    vid.currentTime = 0;
+    vid.play().catch(() => {});
+
+    const onTimeUpdate = () => {
+      if (!vid.duration) return;
+      setProgress((vid.currentTime / vid.duration) * 100);
+    };
+
+    const onEnded = () => {
+      goTo((cur + 1) % slides.length);
+    };
+
+    vid.addEventListener("timeupdate", onTimeUpdate);
+    vid.addEventListener("ended", onEnded);
+
+    return () => {
+      vid.removeEventListener("timeupdate", onTimeUpdate);
+      vid.removeEventListener("ended", onEnded);
+    };
+  }, [cur]);
+
+  const s = slides[cur];
 
   return (
-    <section className="relative w-full h-[calc(100vh-140px)] min-h-[400px] max-h-[700px] overflow-hidden">
-      
-      {/* 1. İmmersiv Arxa Fon - PERFORMANS ÜÇÜN YALNIZ RƏNG KEÇİDİ (6 video problemini həll etdi) */}
-      <div className="absolute inset-0 w-full h-full bg-white z-0">
-        <motion.div
-          className="absolute inset-0 pointer-events-none"
-          animate={{ backgroundColor: slides[currentSlide].overlayColor }}
-          transition={BG_TRANSITION}
-        />
-        {/* Lüks dərinlik üçün statik blur elementi */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-white/40 blur-[120px] rounded-full pointer-events-none" />
-      </div>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap');
 
-      {/* 2. Mərkəzi Glassmorphism Kart */}
-      <div className="relative z-30 container mx-auto px-4 h-full flex items-center">
-        <div className="relative flex flex-col md:flex-row items-center justify-between max-w-5xl mx-auto w-full p-4 pt-2 md:p-10 rounded-[3rem]">
-          
-          {/* Sol Tərəf: Editorial Tipografiya (YALNIZ DESKTOP) */}
-          <div className="hidden md:block w-1/2 relative h-[400px]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`desktop-text-${currentSlide}`}
-                initial={{ opacity: 0, y: 25 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={MEDIUM_TRANSITION}
-                className="absolute inset-0 flex flex-col justify-center gap-4 px-8"
-              >
-                <p className="text-xs tracking-[0.3em] text-[#B8977E] uppercase font-medium">
-                  ✧ YENİ KOLLEKSİYA ✧
-                </p>
+        .hr {
+          --nav-h: 100px;
+          font-family: 'DM Sans', sans-serif;
+          width: 100%;
+          height: calc(100vh - var(--nav-h));
+          min-height: 520px;
+          max-height: 860px;
+          background: #FAF7F2;
+          position: relative;
+          overflow: hidden;
+          display: grid;
+          grid-template-columns: 1fr 0.72fr;
+        }
 
-                <h1 className="font-serif text-5xl md:text-7xl text-gray-900 leading-[1.1]">
-                  <span className="block">{slides[currentSlide].title.split(" ")[0]}</span>
-                  <span className="block italic font-light">{slides[currentSlide].title.split(" ").slice(1).join(" ")}</span>
-                </h1>
-                
-                <div className="relative min-h-[60px]">
-                  <p className="text-gray-600 text-lg font-light leading-relaxed">
-                    {slides[currentSlide].subtitle}
-                  </p>
-                </div>
-                
-                <button className="mt-4 px-10 py-4 w-fit tracking-wider text-xs uppercase transition-all duration-500 rounded-full bg-[#3E2723] text-white hover:bg-black shadow-lg hover:shadow-xl">
-                  Kəşf Et
-                </button>
+        /* ═══════════════════════════
+           LEFT — text panel
+        ═══════════════════════════ */
+        .hr-left {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 clamp(32px, 5vw, 80px);
+          position: relative;
+          z-index: 2;
+          background: #FAF7F2;
+        }
 
-                {/* Trust Badge */}
-                <div className="flex items-center gap-3 mt-2">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3].map((i) => (
-                      <div
-                        key={i}
-                        className="w-7 h-7 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 border-2 border-white shadow-sm flex items-center justify-center"
-                      >
-                        <svg className="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 24 24">
-                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-[10px] text-gray-500 font-light">
-                    Bakıda <span className="font-medium text-gray-700">+5000</span> xoşbəxt müştəri
-                  </p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+        /* Faint radial warm tint */
+        .hr-left::before {
+          content: '';
+          position: absolute; inset: 0; pointer-events: none;
+          background: radial-gradient(ellipse 80% 60% at 0% 60%, rgba(184,151,126,0.07) 0%, transparent 70%);
+        }
+
+        .hr-tag {
+          font-size: 10px; font-weight: 500;
+          letter-spacing: 0.32em; text-transform: uppercase;
+          color: #B8977E; margin-bottom: 22px;
+          display: flex; align-items: center; gap: 12px;
+          transition: opacity 0.3s, transform 0.3s;
+        }
+        .hr-tag::before, .hr-tag::after {
+          content: ''; display: block;
+          height: 1px; width: 20px;
+          background: #B8977E; opacity: 0.5;
+        }
+
+        .hr-title {
+          font-family: 'Playfair Display', serif;
+          line-height: 0.92; margin-bottom: 22px;
+        }
+        .hr-t1 {
+          display: block;
+          font-size: clamp(48px, 5.5vw, 84px);
+          font-weight: 900; color: #2A1F1A;
+          transition: opacity 0.35s, transform 0.35s;
+        }
+        .hr-t2 {
+          display: block;
+          font-size: clamp(52px, 6vw, 92px);
+          font-weight: 400; font-style: italic; color: #2A1F1A;
+          transition: opacity 0.35s 0.06s, transform 0.35s 0.06s;
+        }
+
+        .hr-line {
+          width: 36px; height: 1.5px; background: #B8977E;
+          margin-bottom: 18px;
+          transition: opacity 0.35s 0.1s, transform 0.35s 0.1s;
+          transform-origin: left;
+        }
+
+        .hr-sub {
+          font-size: 14px; font-weight: 300; line-height: 1.8;
+          color: #7A6659; max-width: 380px; margin-bottom: 32px;
+          transition: opacity 0.35s 0.14s, transform 0.35s 0.14s;
+        }
+
+        .hr-actions {
+          display: flex; align-items: center; gap: 20px; margin-bottom: 32px;
+          transition: opacity 0.35s 0.18s, transform 0.35s 0.18s;
+        }
+
+        .hr-btn {
+          display: inline-flex; align-items: center; gap: 10px;
+          padding: 13px 30px; font-size: 11px; font-weight: 500;
+          letter-spacing: 0.2em; text-transform: uppercase;
+          color: #FAF7F2; background: #3E2723; border: none; cursor: pointer;
+          border-radius: 2px; font-family: 'DM Sans', sans-serif;
+          transition: background 0.25s, transform 0.2s;
+        }
+        .hr-btn:hover { background: #2A1F1A; transform: translateY(-1px); }
+        .hr-btn svg { transition: transform 0.25s; }
+        .hr-btn:hover svg { transform: translateX(3px); }
+
+        .hr-btn2 {
+          font-size: 11px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
+          color: #9A8070; background: none; border: none;
+          border-bottom: 1px solid rgba(154,128,112,0.3);
+          cursor: pointer; padding: 3px 0; font-family: 'DM Sans', sans-serif;
+          transition: color 0.25s, border-color 0.25s;
+        }
+        .hr-btn2:hover { color: #3E2723; border-color: #3E2723; }
+
+        .hr-trust {
+          display: flex; align-items: stretch; gap: 0;
+          padding-top: 24px; border-top: 1px solid rgba(58,40,32,0.09);
+          transition: opacity 0.35s 0.22s, transform 0.35s 0.22s;
+        }
+        .hr-stat {
+          display: flex; flex-direction: column; justify-content: center;
+          padding-right: 22px;
+        }
+        .hr-stat + .hr-stat {
+          padding-left: 22px; padding-right: 22px;
+          border-left: 1px solid rgba(58,40,32,0.1);
+        }
+        .hr-stat:last-child { padding-right: 0; }
+        .hr-stat-num {
+          font-family: 'Playfair Display', serif;
+          font-size: 22px; font-weight: 700;
+          color: #2A1F1A; line-height: 1; margin-bottom: 5px;
+        }
+        .hr-stat-num em {
+          font-style: normal; font-size: 13px; font-weight: 400;
+          color: #B8977E; margin-left: 1px;
+        }
+        .hr-stat-lbl {
+          font-size: 9.5px; font-weight: 400;
+          letter-spacing: 0.14em; text-transform: uppercase;
+          color: #9A8070;
+        }
+
+        /* ── SLIDE-IN/OUT STATES ── */
+        .hr-hidden .hr-tag,
+        .hr-hidden .hr-t1,
+        .hr-hidden .hr-t2,
+        .hr-hidden .hr-line,
+        .hr-hidden .hr-sub,
+        .hr-hidden .hr-actions,
+        .hr-hidden .hr-trust { opacity: 0; transform: translateY(-12px); }
+        .hr-hidden .hr-line { transform: scaleX(0); }
+
+        .hr-shown .hr-tag,
+        .hr-shown .hr-t1,
+        .hr-shown .hr-t2,
+        .hr-shown .hr-line,
+        .hr-shown .hr-sub,
+        .hr-shown .hr-actions,
+        .hr-shown .hr-trust { opacity: 1; transform: translateY(0) scaleX(1); }
+
+        /* ═══════════════════════════
+           RIGHT — full video panel
+        ═══════════════════════════ */
+        .hr-right {
+          position: relative;
+          overflow: hidden;
+          background: #2A1F1A;
+        }
+
+        /* Videos stacked, active one fades in */
+        .hr-vid {
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+          object-fit: cover;
+          opacity: 0;
+          transition: opacity 0.9s ease;
+        }
+        .hr-vid.on { opacity: 1; }
+
+        /* Left edge soft blend into cream */
+        .hr-right-fade {
+          position: absolute; inset-y: 0; left: 0;
+          width: 80px; z-index: 3; pointer-events: none;
+          background: linear-gradient(to right, #FAF7F2, transparent);
+        }
+
+        /* Pill badge */
+        .hr-pill {
+          position: absolute; top: 20px; left: 28px; z-index: 5;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+          font-weight: 500; color: #FAF7F2;
+          padding: 5px 14px; border-radius: 20px;
+          transition: background 0.5s;
+        }
+
+        /* Slide controls — bottom center of right panel */
+        .hr-ctrls {
+          position: absolute; bottom: 20px; left: 0; right: 0;
+          z-index: 6;
+          display: flex; justify-content: center; align-items: center; gap: 20px;
+        }
+        .hr-ctrl {
+          display: flex; flex-direction: column; align-items: center; gap: 6px;
+          cursor: pointer; background: none; border: none; padding: 4px;
+          opacity: 0.4; transition: opacity 0.3s;
+          font-family: 'Playfair Display', serif;
+        }
+        .hr-ctrl.on { opacity: 1; }
+        .hr-ctrl:hover { opacity: 0.7; }
+        .hr-cnum {
+          font-size: 9px; letter-spacing: 0.2em;
+          color: rgba(250,247,242,0.8); font-style: italic;
+        }
+        .hr-cbar {
+          width: 32px; height: 1.5px;
+          background: rgba(250,247,242,0.2); border-radius: 2px; overflow: hidden;
+        }
+        .hr-cfill {
+          height: 100%; border-radius: 2px;
+          background: rgba(250,247,242,0.85);
+          width: 0%; transition: width 0.08s linear;
+        }
+
+        /* ═══════════════════════════
+           MOBILE — full bleed video bg
+        ═══════════════════════════ */
+        @media (max-width: 767px) {
+          .hr {
+            --nav-h: 116px;
+            grid-template-columns: 1fr;
+            height: calc(100dvh - var(--nav-h));
+            max-height: none;
+            position: relative;
+          }
+
+          /* Video fills entire hero */
+          .hr-right {
+            position: absolute; inset: 0;
+            z-index: 1;
+          }
+          .hr-right-fade { display: none; }
+
+          /* Gradient overlay for text legibility */
+          .hr-right::after {
+            content: '';
+            position: absolute; inset: 0; z-index: 2;
+            background: linear-gradient(
+              to bottom,
+              rgba(0,0,0,0) 30%,
+              rgba(0,0,0,0.6) 70%,
+              rgba(0,0,0,0.78) 100%
+            );
+          }
+
+          /* Text pinned above controls */
+          .hr-left {
+            position: absolute; bottom: 50px; left: 0; right: 0;
+            z-index: 5; padding: 0 22px;
+            background: transparent;
+          }
+          .hr-left::before { display: none; }
+
+          .hr-tag { color: rgba(250,247,242,0.7); margin-bottom: 10px; }
+          .hr-tag::before, .hr-tag::after { background: rgba(250,247,242,0.3); }
+          .hr-t1 { font-size: clamp(42px, 12vw, 64px); color: #FAF7F2; }
+          .hr-t2 { font-size: clamp(46px, 13vw, 70px); color: #FAF7F2; }
+          .hr-line { background: rgba(250,247,242,0.35); margin-bottom: 10px; }
+          .hr-sub {
+            font-size: 13px; color: rgba(250,247,242,0.72);
+            max-width: 100%; margin-bottom: 18px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+          }
+          .hr-btn {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #FAF7F2;
+          }
+          .hr-btn:hover { background: rgba(255,255,255,0.25); }
+          .hr-btn2 { color: rgba(250,247,242,0.5); border-color: rgba(250,247,242,0.18); }
+          .hr-trust {
+            border-color: rgba(250,247,242,0.12); padding-top: 12px;
+          }
+          .hr-stat-num { color: #FAF7F2; }
+          .hr-stat-num em { color: rgba(250,247,242,0.5); }
+          .hr-stat-lbl { color: rgba(250,247,242,0.45); }
+          .hr-stat + .hr-stat { border-color: rgba(250,247,242,0.12); }
+
+          .hr-pill { top: 14px; left: 16px; }
+          .hr-ctrls { bottom: 10px; }
+        }
+      `}</style>
+
+      <div className={`hr ${visible ? "hr-shown" : "hr-hidden"}`}>
+        {/* ── LEFT: Text ── */}
+        <div className="hr-left">
+          <div className="hr-tag">{s.tag}</div>
+
+          <div className="hr-title">
+            <span className="hr-t1">{s.t1}</span>
+            <span className="hr-t2">{s.t2}</span>
           </div>
 
-          <div className="w-full md:w-1/2 flex justify-center items-center mt-2 md:mt-0">
-            <div className="relative w-[90%] mx-auto md:w-[260px] h-[calc(100vh-240px)] min-h-[400px] max-h-[550px] md:h-[50vh] md:max-h-[500px] rounded-[2rem] overflow-hidden shadow-2xl border border-white/50 bg-white">
-              
-              {/* Qara Qradiyent Overlay (yalnız mobil) - Gücləndirilmiş oxunaqlılıq */}
-              <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/95 via-black/50 to-transparent md:hidden pointer-events-none" />
+          <div className="hr-line" />
 
-              {/* Mətnlər (yalnız mobil) - Ən aşağı yığılmış, yığcam */}
-              <div className="absolute inset-0 z-30 md:hidden pointer-events-none flex flex-col justify-end p-5 pb-8">
-                <div className="relative h-[160px] w-full">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={`mobile-text-${currentSlide}`}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={MEDIUM_TRANSITION}
-                      className="absolute inset-0 flex flex-col justify-end"
-                    >
-                      <h2 className="text-white font-serif text-3xl mb-1 leading-none drop-shadow-xl">
-                        {slides[currentSlide].title}
-                      </h2>
-                      <div className="min-h-[36px] mb-3">
-                        <p className="text-white/95 text-sm line-clamp-2 font-light drop-shadow-lg leading-snug">
-                          {slides[currentSlide].subtitle}
-                        </p>
-                      </div>
-                      <button className="bg-white/20 backdrop-blur-md border border-white/50 text-white font-light rounded-full px-7 py-2.5 w-max hover:bg-white/30 transition-all pointer-events-auto shadow-xl">
-                        Kəşf Et
-                      </button>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
+          <p className="hr-sub">{s.sub}</p>
+
+          <div className="hr-actions">
+            <button className="hr-btn">
+              Kəşf Et
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+            <button className="hr-btn2">Kolleksiya</button>
+          </div>
+
+          <div className="hr-trust">
+            <div className="hr-stat">
+              <div className="hr-stat-num">
+                5K<em>+</em>
               </div>
-
-              {/* Foreground Videos (Yalnız 3 video qaldı, lag yoxdur) */}
-              {slides.map((slide, index) => (
-                <motion.video
-                  key={`content-video-${slide.id}`}
-                  initial={false}
-                  animate={{ 
-                    opacity: currentSlide === index ? 1 : 0,
-                    zIndex: currentSlide === index ? 10 : 0
-                  }}
-                  transition={SLOW_TRANSITION}
-                  src={slide.video}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-              ))}
-              
-              {/* Glossy overlay */}
-              <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/10 to-white/20 z-40" />
+              <div className="hr-stat-lbl">Müştəri</div>
+            </div>
+            <div className="hr-stat">
+              <div className="hr-stat-num">
+                4.9<em>★</em>
+              </div>
+              <div className="hr-stat-lbl">Reytinq</div>
+            </div>
+            <div className="hr-stat">
+              <div className="hr-stat-num">
+                3<em>il</em>
+              </div>
+              <div className="hr-stat-lbl">Təcrübə</div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Progress Indicators */}
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2 z-10">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className="group py-1.5 px-0.5 focus:outline-none"
-          >
-            <div
-              className={`h-[2px] transition-all duration-500 ease-out rounded-full ${
-                currentSlide === index
-                  ? "w-10 bg-gray-900"
-                  : "w-5 bg-gray-400 group-hover:bg-gray-600"
-              }`}
+        {/* ── RIGHT: Full video panel ── */}
+        <div className="hr-right">
+          {/* Left-edge cream blend */}
+          <div className="hr-right-fade" />
+
+          {/* All videos stacked, active fades in */}
+          {slides.map((sl, i) => (
+            <video
+              key={sl.id}
+              ref={(el) => (videoRefs.current[i] = el)}
+              className={`hr-vid${cur === i ? " on" : ""}`}
+              src={sl.video}
+              autoPlay
+              muted
+              playsInline
             />
-          </button>
-        ))}
+          ))}
+
+          {/* Pill */}
+          <div className="hr-pill" style={{ background: `${s.accent}E0` }}>
+            {s.pill}
+          </div>
+
+          {/* Slide controls */}
+          <div className="hr-ctrls">
+            {slides.map((sl, i) => (
+              <button
+                key={sl.id}
+                className={`hr-ctrl${cur === i ? " on" : ""}`}
+                onClick={() => goTo(i)}
+              >
+                <span className="hr-cnum">0{i + 1}</span>
+                <div className="hr-cbar">
+                  <div
+                    className="hr-cfill"
+                    style={{ width: cur === i ? `${progress}%` : "0%" }}
+                  />
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
-    </section>
+    </>
   );
 }

@@ -114,10 +114,10 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="fixed inset-0 z-50 md:hidden bg-[#FCFAEF] min-h-screen"
+              className="fixed inset-0 z-50 md:hidden bg-[#FCFAEF] h-[100dvh] overflow-y-auto flex flex-col"
             >
               {/* Üst Panel: Logo + Bağla */}
-              <div className="flex items-center justify-between px-6 py-4">
+              <div className="flex items-center justify-between px-6 py-4 pt-6">
                 <div /> {/* Boşluq */}
                 <div className="flex-1 flex justify-center">
                   <Logo />
@@ -131,7 +131,7 @@ export default function Navbar() {
               </div>
 
               {/* Naviqasiya Linkləri */}
-              <nav className="flex flex-col justify-center h-full px-8 pb-20">
+              <nav className="flex flex-col justify-center flex-1 px-8 py-8">
                 <ul className="flex flex-col gap-6">
                   {textMenuCategories.map((category, index) => (
                     <motion.li
@@ -161,7 +161,7 @@ export default function Navbar() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.4 }}
-                className="absolute bottom-0 left-0 right-0 px-6 pb-8"
+                className="px-6 pb-10 pt-4"
               >
                 <div className="border-t border-gray-300 pt-4 flex items-center justify-center gap-4">
                   <a href="#" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
