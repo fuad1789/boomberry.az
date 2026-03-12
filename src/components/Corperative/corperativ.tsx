@@ -905,7 +905,7 @@ function MobileModal({
                 lineHeight: 1.1,
               }}
             >
-              B2B <em style={{ fontStyle: "italic", color: "#8B4513" }}>VIP</em>{" "}
+              Korporativ {" "}
               Sifariş
             </h2>
             {!submitted && (
@@ -1233,7 +1233,7 @@ function CorporateWizardModal({ isOpen, onClose, isMobile }: any) {
                 overflowX: "auto"
               }}
             >
-              B2B <em style={{ fontStyle: "italic", color: "#8B4513" }}>VIP</em>{" "}
+              Korporativ  {" "}
               Sifariş
             </h2>
             {!submitted && (
@@ -1707,7 +1707,7 @@ export default function CorporateGifting() {
   return (
     <section
       style={{
-        background: "#1C1009",
+        background: "#FAF7F2",
         padding: isMobile ? "64px 20px" : "100px 40px",
         position: "relative",
         overflow: "hidden",
@@ -1726,7 +1726,7 @@ export default function CorporateGifting() {
           right: 0,
           bottom: 0,
           background:
-            "radial-gradient(circle at center, rgba(201,169,110,0.1) 0%, transparent 70%)",
+            "radial-gradient(circle at center, rgba(201,169,110,0.06) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -1769,19 +1769,19 @@ export default function CorporateGifting() {
             fontFamily: "'Playfair Display',serif",
             fontSize: isMobile ? "2.2rem" : "3.5rem",
             fontWeight: 400,
-            color: "#FAF7F2",
+            color: "#1C1009",
             margin: "0 0 20px",
             lineHeight: 1.1,
           }}
         >
-          B2B <em style={{ fontStyle: "italic", color: "#C9A96E" }}>VIP</em>{" "}
+          Korporativ  {" "}
           Sifarişlər
         </h2>
         <p
           style={{
             fontFamily: "'Cormorant Garamond',serif",
             fontSize: isMobile ? "1.1rem" : "1.3rem",
-            color: "#FAF7F2",
+            color: "#5C3D2E",
             margin: "0 auto 40px",
             maxWidth: 600,
             lineHeight: 1.6,

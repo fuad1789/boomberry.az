@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function CraftPhilosophy() {
   return (
-    <section className="bg-[#FAF7F2] w-full relative">
+    <section className="bg-[#1C1009] w-full relative">
       {/* Top border */}
       <div
         className="absolute top-0 left-0 right-0 h-px"
@@ -51,11 +51,11 @@ export default function CraftPhilosophy() {
                 fontSize: "clamp(2rem,3.8vw,3.4rem)",
                 fontWeight: 400,
                 lineHeight: 1.12,
-                color: "#1C1009",
+                color: "#F5ECD7",
               }}
             >
               Mükəmməllik hər{" "}
-              <em style={{ fontStyle: "italic", color: "#8B4513" }}>
+              <em style={{ fontStyle: "italic", color: "#C9A96E" }}>
                 dənəcikdə
               </em>{" "}
               gizlidir.
@@ -74,7 +74,7 @@ export default function CraftPhilosophy() {
                 fontFamily: "'Cormorant Garamond',serif",
                 fontSize: "1.05rem",
                 lineHeight: 1.85,
-                color: "#5C3D2E",
+                color: "rgba(245,236,215,0.75)",
               }}
             >
               Hər bir məhsulumuz ən təzə giləmeyvələrdən dondurularaq qurudulur
@@ -109,7 +109,7 @@ export default function CraftPhilosophy() {
               </svg>
             </button>
 
-            <div className="grid grid-cols-3 pt-5 border-t border-[rgba(62,39,35,0.11)]">
+            <div className="grid grid-cols-3 pt-5 border-t border-[rgba(245,236,215,0.12)]">
               {[
                 { num: "100%", label: "Təbii Meyvə" },
                 { num: "Sıfır", label: "Qatqı" },
@@ -129,7 +129,7 @@ export default function CraftPhilosophy() {
                       fontFamily: "'Playfair Display',serif",
                       fontSize: "1rem",
                       fontWeight: 500,
-                      color: "#8B4513",
+                      color: "#C9A96E",
                     }}
                   >
                     {s.num}
@@ -140,7 +140,7 @@ export default function CraftPhilosophy() {
                       fontSize: "0.46rem",
                       letterSpacing: "0.14em",
                       textTransform: "uppercase",
-                      color: "rgba(62,39,35,0.4)",
+                      color: "rgba(245,236,215,0.4)",
                     }}
                   >
                     {s.label}
@@ -278,7 +278,7 @@ export default function CraftPhilosophy() {
           </div>
 
           <h2
-            className="mb-4 text-[#1C1009]"
+            className="mb-4 text-[#F5ECD7]"
             style={{
               fontFamily: "'Playfair Display',serif",
               fontSize: "1.75rem",
@@ -297,7 +297,7 @@ export default function CraftPhilosophy() {
           />
 
           <p
-            className="mb-6 text-[#5C3D2E]"
+            className="mb-6 text-[rgba(245,236,215,0.75)]"
             style={{
               fontFamily: "'Cormorant Garamond',serif",
               fontSize: "1rem",
@@ -356,7 +356,7 @@ export default function CraftPhilosophy() {
                     fontFamily: "'Playfair Display',serif",
                     fontSize: "1rem",
                     fontWeight: 500,
-                    color: "#8B4513",
+                    color: "#C9A96E",
                   }}
                 >
                   {s.num}
@@ -367,7 +367,7 @@ export default function CraftPhilosophy() {
                     fontSize: "0.44rem",
                     letterSpacing: "0.12em",
                     textTransform: "uppercase",
-                    color: "rgba(62,39,35,0.4)",
+                    color: "rgba(245,236,215,0.4)",
                   }}
                 >
                   {s.label}

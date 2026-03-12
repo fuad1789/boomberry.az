@@ -6,6 +6,8 @@ import CraftPhilosophy from "@/components/philosophy/CraftPhilosophy";
 import CustomBoxBuilder from "@/components/Customboxbuilder/Customboxbuilder";
 import CorporateGifting from "@/components/Corperative/corperativ";
 import DeliveryGuarantee from "@/components/DeliveryGuarantee/DeliveryGuarantee";
+import Testimonials from "@/components/Testimonials/testimonials";
+import Footer from "@/components/Footer/Footer";
 
 export default function Home() {
   return (
@@ -18,6 +20,8 @@ export default function Home() {
       <CraftPhilosophy />
       <CorporateGifting />
       <DeliveryGuarantee />
+      <Testimonials />
+      <Footer />
     </main>
   );
 }

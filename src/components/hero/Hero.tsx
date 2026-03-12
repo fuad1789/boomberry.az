@@ -39,9 +39,9 @@ export default function Hero() {
   const [cur, setCur] = useState(0);
   const [progress, setProgress] = useState(0);
   const [visible, setVisible] = useState(true);
-  const videoRefs = useRef([]);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  const goTo = (idx) => {
+  const goTo = (idx: number) => {
     if (idx === cur) return;
     setVisible(false);
     setProgress(0);
@@ -167,16 +167,19 @@ export default function Hero() {
         }
 
         .hr-btn {
-          display: inline-flex; align-items: center; gap: 10px;
-          padding: 13px 30px; font-size: 11px; font-weight: 500;
-          letter-spacing: 0.2em; text-transform: uppercase;
+          display: inline-flex; align-items: center; gap: 12px;
+          padding: 18px 42px; font-size: 12px; font-weight: 500;
+          letter-spacing: 0.24em; text-transform: uppercase;
           color: #FAF7F2; background: #3E2723; border: none; cursor: pointer;
           border-radius: 2px; font-family: 'DM Sans', sans-serif;
-          transition: background 0.25s, transform 0.2s;
+          transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
         }
-        .hr-btn:hover { background: #2A1F1A; transform: translateY(-1px); }
+        .hr-btn:hover {
+          background: #2A1F1A; transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(62,39,35,0.28);
+        }
         .hr-btn svg { transition: transform 0.25s; }
-        .hr-btn:hover svg { transform: translateX(3px); }
+        .hr-btn:hover svg { transform: translateX(4px); }
 
         .hr-btn2 {
           font-size: 11px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
@@ -434,7 +437,9 @@ export default function Hero() {
           {slides.map((sl, i) => (
             <video
               key={sl.id}
-              ref={(el) => (videoRefs.current[i] = el)}
+              ref={(el) => {
+                videoRefs.current[i] = el;
+              }}
               className={`hr-vid${cur === i ? " on" : ""}`}
               src={sl.video}
               autoPlay

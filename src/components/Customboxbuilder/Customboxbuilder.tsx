@@ -165,10 +165,9 @@ function OptionCard({
   isMobile: boolean;
   isBoxStep?: boolean;
 }) {
-  // Box step üçün daha böyük minHeight (şəkil daha böyük olduğu üçün)
-  const cardMinHeight = isBoxStep ? (isMobile ? 200 : 240) : (isMobile ? 140 : 160);
-  // Box step üçün şəkil hündürlüyü daha böyük
-  const imgHeight = isBoxStep ? (isMobile ? 100 : 140) : (isMobile ? 64 : 80);
+  // Bütün addımlarda eyni sabit hündürlük — şəkil ölçüsündən asılı olmamalı
+  const CARD_HEIGHT = isMobile ? 170 : 192;
+  const IMG_HEIGHT = isMobile ? 80 : 96;
   
   return (
     <motion.button
@@ -191,7 +190,8 @@ function OptionCard({
         boxShadow: selected ? "0 2px 16px rgba(201,169,110,0.15)" : "none",
         display: "flex",
         flexDirection: "column",
-        minHeight: cardMinHeight,
+        height: CARD_HEIGHT,
+        overflow: "hidden",
       }}
     >
       {/* Gold check */}
@@ -225,22 +225,31 @@ function OptionCard({
         </motion.div>
       )}
 
-      {/* Image */}
+      {/* Image — sabit hündürlük, heç vaxt böyüməz */}
       <div
         style={{
           width: "100%",
-          height: imgHeight,
-          marginBottom: isMobile ? 10 : 12,
+          height: IMG_HEIGHT,
+          minHeight: IMG_HEIGHT,
+          maxHeight: IMG_HEIGHT,
+          marginBottom: isMobile ? 8 : 10,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           flexShrink: 0,
+          overflow: "hidden",
         }}
       >
         <img
           src={item.img}
           alt={item.name}
-          style={{ width: "65%", height: "100%", objectFit: "contain" }}
+          style={{
+            width: "auto",
+            height: "100%",
+            maxWidth: "80%",
+            objectFit: "contain",
+            display: "block",
+          }}
           onError={(e) => {
             (e.target as HTMLImageElement).style.opacity = "0.3";
           }}
@@ -262,16 +271,19 @@ function OptionCard({
         {item.name}
       </p>
 
-      {/* Desc — hide on very small and hide on box step (step 4) */}
+      {/* Desc — yalnız desktop + qeyri-box addımlarda göstər, overflow yoxdur */}
       {!isMobile && !isBoxStep && (
         <p
           style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "0.8rem",
+            fontSize: "0.78rem",
             color: "#8B6347",
-            margin: "0 0 8px",
+            margin: "0 0 6px",
             lineHeight: 1.3,
-            minHeight: "2.6em",
+            overflow: "hidden",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical" as const,
           }}
         >
           {item.desc}

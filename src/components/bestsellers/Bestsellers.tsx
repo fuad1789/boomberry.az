@@ -461,22 +461,22 @@ export default function Bestsellers() {
         </div>
       </div>
 
-      {/* Dots */}
-      <div className="flex justify-center gap-2 mt-8 z-10 shrink-0">
+      {/* Dior-style line pagination */}
+      <div className="flex justify-center items-center gap-3 mt-10 z-10 shrink-0">
         {bestsellers.map((_, i) => (
           <button
             key={i}
             onClick={() => snapTo(COUNT + i, true)}
             style={{
-              width: i === dotIndex ? 24 : 6,
-              height: 6,
-              borderRadius: 3,
-              backgroundColor: i === dotIndex ? "#3E2723" : "#D7CFC5",
+              width: i === dotIndex ? 40 : 20,
+              height: 1.5,
+              borderRadius: 0,
+              backgroundColor: i === dotIndex ? "#B8977E" : "rgba(62,39,35,0.2)",
               border: "none",
               padding: 0,
               cursor: "pointer",
               transition:
-                "width 400ms cubic-bezier(0.16,1,0.3,1), background-color 400ms ease",
+                "width 500ms cubic-bezier(0.16,1,0.3,1), background-color 400ms ease",
             }}
           />
         ))}
