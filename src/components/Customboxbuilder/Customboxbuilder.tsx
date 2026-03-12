@@ -6,38 +6,46 @@ import { motion, AnimatePresence } from "framer-motion";
 // ── Data ──────────────────────────────────────────────────────────────────────
 
 const STEPS = [
-  { id: 1, label: "Şokolad Növü", sub: "Bazanı seçin" },
-  { id: 2, label: "Dolğu", sub: "Dadı seçin" },
-  { id: 3, label: "Topping", sub: "Bitiricini seçin" },
-  { id: 4, label: "Qutu Ölçüsü", sub: "Miqdarı seçin" },
+  { id: 1, label: "Şokolad Əsası", sub: "Zövqünüzə uyğun təməli yaradın" },
+  { id: 2, label: "İç Dolğusu", sub: "Şokoladınızın qəlbini seçin" },
+  {
+    id: 3,
+    label: "Son Toxunuş",
+    sub: "Şedevrinizi tamamlayacaq zərif detalı seçin",
+  },
+  {
+    id: 4,
+    label: "Kolleksiya Həcmi",
+    sub: "Özəl qutunuzun ölçüsünü müəyyən edin",
+  },
 ];
 
 const BASES = [
   {
     id: "dark",
-    name: "Dark Şokolad",
-    desc: "Zəngin, intensiv dad",
+    name: "Tünd Şokolad",
+    desc: "Zəngin və dərin kakao notları",
     img: "/assets/custom-box/dark chocolate.png",
     price: 0,
   },
   {
     id: "milk",
-    name: "Süd Şokoladı",
-    desc: "Kremli, yumşaq ləzzət",
+    name: "Südlü Şokolad",
+    desc: "İpək kimi yumşaq, kremli ləzzət",
     img: "/assets/custom-box/milk chocolate.png",
     price: 0,
   },
   {
     id: "white",
     name: "Ağ Şokolad",
-    desc: "Nazik, vanilin ətrli",
+    desc: "Zərif Madaqaskar vanili toxunuşu",
     img: "/assets/custom-box/white chocolate.png",
     price: 0,
   },
   {
     id: "pink",
     name: "Ruby Şokolad",
-    desc: "Meyvəli, unikal çeşid",
+    desc: "Təbii giləmeyvə notları ilə nadir çeşid",
     img: "/assets/custom-box/pink chocolate.png",
     price: 5,
   },
@@ -46,29 +54,29 @@ const BASES = [
 const FILLINGS = [
   {
     id: "ganache",
-    name: "Ganache",
-    desc: "İpəksi şokolad kremi",
+    name: "Qanaş",
+    desc: "İpək kimi yumşaq, zəngin şokolad kremi",
     img: "/assets/custom-box/ganache.png",
     price: 0,
   },
   {
     id: "caramel",
-    name: "Karamel",
-    desc: "Dəniz duzu ilə şirin",
+    name: "Duzlu Karamel",
+    desc: "Şirin karamel və zərif dəniz duzunun ahəngi",
     img: "/assets/custom-box/caramel.png",
     price: 2,
   },
   {
     id: "praline",
-    name: "Praline",
-    desc: "Qovrulmuş fındıq pastası",
+    name: "Pralin",
+    desc: "Karamelləşdirilmiş və qovrulmuş fındıq əzməsi",
     img: "/assets/custom-box/Praline.png",
     price: 2,
   },
   {
     id: "fruit",
-    name: "Meyvə Puresi",
-    desc: "Moruq ya da ehtiram",
+    name: "Meyvə Püresi",
+    desc: "Təzə moruq və meşə meyvələrinin təbii özü",
     img: "/assets/custom-box/Fruit Pure.png",
     price: 3,
   },
@@ -77,29 +85,29 @@ const FILLINGS = [
 const TOPPINGS = [
   {
     id: "gold",
-    name: "Qızıl Vərəq",
-    desc: "24K yeməli qızıl",
+    name: "24K Qızıl Yarpaq",
+    desc: "Yeməli qızılla möhtəşəm və lüks toxunuş",
     img: "/assets/custom-box/gold leaf.png",
     price: 8,
   },
   {
     id: "salt",
     name: "Dəniz Duzu",
-    desc: "Xırtıldayan kontrast",
+    desc: "Şirinliyi tarazlayan zərif xırtıltı",
     img: "/assets/custom-box/Sea Salt.png",
     price: 0,
   },
   {
     id: "pist",
-    name: "Püstə",
-    desc: "Üzülmüş fıstıq",
+    name: "Qovrulmuş Püstə",
+    desc: "Xırda əzilmiş, təzə və xırtıldayan püstə dənələri",
     img: "/assets/custom-box/Crushed Pistachios.png",
     price: 3,
   },
   {
     id: "cacao",
-    name: "Kakao",
-    desc: "Kadifəsi bitiriş",
+    name: "Kakao Tozu",
+    desc: "Zəngin, tünd və məxməri son toxunuş",
     img: "/assets/custom-box/cacao.png",
     price: 0,
   },
@@ -109,28 +117,28 @@ const BOXES = [
   {
     id: "6",
     name: "6 Ədəd",
-    desc: "Şəxsi zövq",
+    desc: "Zərif dequstasiya və şəxsi anlar üçün ideal seçim",
     img: "/assets/custom-box/Box - 6.png",
     price: 12,
   },
   {
     id: "12",
     name: "12 Ədəd",
-    desc: "Sevgilər üçün",
+    desc: "Klassik kolleksiya. Dəyərlilərinizlə paylaşmaq üçün mükəmməl ahəng",
     img: "/assets/custom-box/Box - 12.png",
     price: 22,
   },
   {
     id: "24",
     name: "24 Ədəd",
-    desc: "Hədiyyə qutusu",
+    desc: "Premium Kolleksiya. Unudulmaz təəssürat yaradan zəngin çeşid",
     img: "/assets/custom-box/Box - 24.png",
     price: 40,
   },
   {
     id: "48",
     name: "48 Ədəd",
-    desc: "Bayram ölçüsü",
+    desc: "Qrand Kolleksiya. Möhtəşəm anlar və əsl qurmanlar üçün mütləq lüks",
     img: "/assets/custom-box/Box - 48.png",
     price: 75,
   },
@@ -149,12 +157,19 @@ function OptionCard({
   selected,
   onSelect,
   isMobile,
+  isBoxStep,
 }: {
   item: { id: string; name: string; desc: string; img: string; price: number };
   selected: boolean;
   onSelect: () => void;
   isMobile: boolean;
+  isBoxStep?: boolean;
 }) {
+  // Box step üçün daha böyük minHeight (şəkil daha böyük olduğu üçün)
+  const cardMinHeight = isBoxStep ? (isMobile ? 200 : 240) : (isMobile ? 140 : 160);
+  // Box step üçün şəkil hündürlüyü daha böyük
+  const imgHeight = isBoxStep ? (isMobile ? 100 : 140) : (isMobile ? 64 : 80);
+  
   return (
     <motion.button
       onClick={onSelect}
@@ -176,6 +191,7 @@ function OptionCard({
         boxShadow: selected ? "0 2px 16px rgba(201,169,110,0.15)" : "none",
         display: "flex",
         flexDirection: "column",
+        minHeight: cardMinHeight,
       }}
     >
       {/* Gold check */}
@@ -213,7 +229,7 @@ function OptionCard({
       <div
         style={{
           width: "100%",
-          height: isMobile ? 64 : 80,
+          height: imgHeight,
           marginBottom: isMobile ? 10 : 12,
           display: "flex",
           alignItems: "center",
@@ -240,13 +256,14 @@ function OptionCard({
           color: "#1C1009",
           margin: "0 0 2px",
           lineHeight: 1.2,
+          minHeight: isMobile ? "1.2em" : "1.3em",
         }}
       >
         {item.name}
       </p>
 
-      {/* Desc — hide on very small */}
-      {!isMobile && (
+      {/* Desc — hide on very small and hide on box step (step 4) */}
+      {!isMobile && !isBoxStep && (
         <p
           style={{
             fontFamily: "'Cormorant Garamond', serif",
@@ -254,6 +271,7 @@ function OptionCard({
             color: "#8B6347",
             margin: "0 0 8px",
             lineHeight: 1.3,
+            minHeight: "2.6em",
           }}
         >
           {item.desc}
@@ -261,37 +279,39 @@ function OptionCard({
       )}
 
       {/* Price */}
-      {item.price > 0 ? (
-        <span
-          style={{
-            fontFamily: "'Cinzel', serif",
-            fontSize: "0.44rem",
-            letterSpacing: "0.14em",
-            color: "#C9A96E",
-            textTransform: "uppercase",
-            background: "rgba(201,169,110,0.1)",
-            padding: "2px 7px",
-            borderRadius: 2,
-            marginTop: isMobile ? 4 : 0,
-            alignSelf: "flex-start",
-          }}
-        >
-          +{item.price} ₼
-        </span>
-      ) : (
-        <span
-          style={{
-            fontFamily: "'Cinzel', serif",
-            fontSize: "0.44rem",
-            letterSpacing: "0.14em",
-            color: "rgba(62,39,35,0.3)",
-            textTransform: "uppercase",
-            marginTop: isMobile ? 4 : 0,
-          }}
-        >
-          Daxil
-        </span>
-      )}
+      <div style={{ marginTop: "auto" }}>
+        {item.price > 0 ? (
+          <span
+            style={{
+              fontFamily: "'Cinzel', serif",
+              fontSize: "0.44rem",
+              letterSpacing: "0.14em",
+              color: "#C9A96E",
+              textTransform: "uppercase",
+              background: "rgba(201,169,110,0.1)",
+              padding: "2px 7px",
+              borderRadius: 2,
+              marginTop: isMobile ? 4 : 0,
+              alignSelf: "flex-start",
+            }}
+          >
+            +{item.price} ₼
+          </span>
+        ) : (
+          <span
+            style={{
+              fontFamily: "'Cinzel', serif",
+              fontSize: "0.44rem",
+              letterSpacing: "0.14em",
+              color: "rgba(62,39,35,0.3)",
+              textTransform: "uppercase",
+              marginTop: isMobile ? 4 : 0,
+            }}
+          >
+            Standart
+          </span>
+        )}
+      </div>
     </motion.button>
   );
 }
@@ -405,7 +425,7 @@ export default function CustomBoxBuilder() {
             lineHeight: 1.1,
           }}
         >
-          Öz Qutunuzu{" "}
+          Öz Şokoladınızı{" "}
           <em style={{ fontStyle: "italic", color: "#8B4513" }}>Yaradın</em>
         </h2>
         <p
@@ -730,6 +750,7 @@ export default function CustomBoxBuilder() {
                         selected={currentValue === item.id}
                         onSelect={() => setField(currentField, item.id)}
                         isMobile={isMobile}
+                        isBoxStep={step === 4}
                       />
                     </motion.div>
                   ))}

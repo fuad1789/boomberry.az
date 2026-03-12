@@ -468,6 +468,25 @@ export default function Hero() {
           </div>
         </div>
       </div>
+      {/* ── Transition to Bestsellers ── */}
+      <div
+        style={{
+          position: "relative",
+          height: 80,
+          background: "#FAF7F2",
+          marginTop: -1,
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "#FDFCF7",
+            clipPath: "polygon(0 60%, 100% 0%, 100% 100%, 0% 100%)",
+          }}
+        />
+      </div>
     </>
   );
 }

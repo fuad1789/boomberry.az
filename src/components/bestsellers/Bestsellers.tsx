@@ -481,6 +481,41 @@ export default function Bestsellers() {
           />
         ))}
       </div>
+      {/* ── Transition to CustomBoxBuilder ── */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 16,
+          padding: "32px 40px 0",
+        }}
+      >
+        <div
+          style={{
+            flex: 1,
+            height: "0.5px",
+            background:
+              "linear-gradient(to right, transparent, #C9A96E, transparent)",
+          }}
+        />
+        <div
+          style={{
+            width: 5,
+            height: 5,
+            background: "#C9A96E",
+            transform: "rotate(45deg)",
+            flexShrink: 0,
+          }}
+        />
+        <div
+          style={{
+            flex: 1,
+            height: "0.5px",
+            background:
+              "linear-gradient(to right, transparent, #C9A96E, transparent)",
+          }}
+        />
+      </div>
     </section>
   );
 }

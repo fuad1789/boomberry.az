@@ -385,7 +385,7 @@ export default function CraftPhilosophy() {
             style={{ aspectRatio: "4/3", background: "#E8DDD4" }}
           >
             <img
-              src="/assets/imgs/philosop/mehsul paket.png"
+              src="/assets/imgs/philosop/mehsul paket mobile.png"
               alt="Premium Paket"
               className="w-full h-full object-cover block"
               onError={(e) => {

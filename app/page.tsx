@@ -4,6 +4,8 @@ import Hero from "@/components/hero/Hero";
 import Bestsellers from "@/components/bestsellers/Bestsellers";
 import CraftPhilosophy from "@/components/philosophy/CraftPhilosophy";
 import CustomBoxBuilder from "@/components/Customboxbuilder/Customboxbuilder";
+import CorporateGifting from "@/components/Corperative/corperativ";
+import DeliveryGuarantee from "@/components/DeliveryGuarantee/DeliveryGuarantee";
 
 export default function Home() {
   return (
@@ -12,8 +14,10 @@ export default function Home() {
       <IconSlider />
       <Hero />
       <Bestsellers />
-      <CraftPhilosophy />
       <CustomBoxBuilder />
+      <CraftPhilosophy />
+      <CorporateGifting />
+      <DeliveryGuarantee />
     </main>
   );
 }
