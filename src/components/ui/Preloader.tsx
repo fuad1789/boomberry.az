@@ -7,19 +7,30 @@ export default function Preloader() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Minimum enforced loading time for cinematic feel and allowing assets to buffer
-    const timer = setTimeout(() => {
-      // Once timer is done, wait for window load if not already fired
-      if (document.readyState === "complete") {
-        setLoading(false);
-      } else {
-        const handleLoad = () => setLoading(false);
-        window.addEventListener("load", handleLoad);
-        return () => window.removeEventListener("load", handleLoad);
-      }
-    }, 2200); // 2.2 seconds cinematic loading
+    let isLoaded = false;
+    let minTimePassed = false;
 
-    return () => clearTimeout(timer);
+    // Minimum display time so it doesn't just flash instantly on fast connections
+    const timer = setTimeout(() => {
+      minTimePassed = true;
+      if (isLoaded) setLoading(false);
+    }, 1500);
+
+    const handleLoad = () => {
+      isLoaded = true;
+      if (minTimePassed) setLoading(false);
+    };
+
+    if (document.readyState === "complete") {
+      handleLoad();
+    } else {
+      window.addEventListener("load", handleLoad);
+    }
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("load", handleLoad);
+    };
   }, []);
 
   return (
@@ -62,16 +73,17 @@ export default function Preloader() {
                 gap: 16,
               }}
             >
-              {/* Monogram / Icon Placeholder */}
+              {/* Spinning Monogram / Icon Placeholder */}
               <motion.div
-                initial={{ rotate: -10, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
                 style={{
-                  width: 48,
-                  height: 48,
+                  width: 54,
+                  height: 54,
                   borderRadius: "50%",
-                  border: "1px solid rgba(201,169,110,0.3)",
+                  border: "1px dashed rgba(201,169,110,0.5)",
+                  borderTop: "1px solid #C9A96E",
+                  borderRight: "1px solid #C9A96E",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -79,8 +91,8 @@ export default function Preloader() {
               >
                 <div
                   style={{
-                    width: 24,
-                    height: 24,
+                    width: 32,
+                    height: 32,
                     background: "linear-gradient(135deg, #C9A96E, #8B4513)",
                     borderRadius: "50%",
                   }}
@@ -99,7 +111,7 @@ export default function Preloader() {
                   lineHeight: 1,
                 }}
               >
-                Bloomberry
+                Boomberry.az
               </h1>
 
               {/* Tagline / Subtitle */}
