@@ -40,7 +40,7 @@ export default function CraftPhilosophy() {
                 className="text-[#C9A96E] uppercase tracking-[0.32em]"
                 style={{ fontFamily: "'Cinzel',serif", fontSize: "0.56rem" }}
               >
-                Bloomberry Freeze-Dry
+                Boombery Freeze-Dry
               </p>
             </div>
 
@@ -273,7 +273,7 @@ export default function CraftPhilosophy() {
               className="text-[#C9A96E] uppercase tracking-[0.28em]"
               style={{ fontFamily: "'Cinzel',serif", fontSize: "0.48rem" }}
             >
-              Bloomberry Sənətkarlığı
+              Boombery Sənətkarlığı
             </p>
           </div>
 

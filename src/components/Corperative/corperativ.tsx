@@ -84,8 +84,8 @@ const BRANDINGS = [
   },
   {
     id: "standard",
-    name: "Standart Bloomberry",
-    desc: "Bloomberry-nin öz premium dizaynı",
+    name: "Standart Boombery",
+    desc: "Boombery-nin öz premium dizaynı",
   },
 ];
 
@@ -622,7 +622,14 @@ function MobileContactForm({
   onBack,
 }: any) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
       {/* Scrollable fields */}
       <div
         style={{
@@ -638,7 +645,7 @@ function MobileContactForm({
           label="Şirkətin Adı *"
           value={contact.company}
           onChange={(v: string) => setContact("company", v)}
-          placeholder="Bloomberry MMC"
+          placeholder="Boombery MMC"
         />
         <LuxInput
           label="Əlaqədar Şəxs *"
@@ -905,8 +912,7 @@ function MobileModal({
                 lineHeight: 1.1,
               }}
             >
-              Korporativ {" "}
-              Sifariş
+              Korporativ Sifariş
             </h2>
             {!submitted && (
               <p
@@ -1161,7 +1167,6 @@ function CorporateWizardModal({ isOpen, onClose, isMobile }: any) {
         alignItems: "center",
         justifyContent: "center",
         padding: 40,
-        
       }}
     >
       <motion.div
@@ -1174,7 +1179,6 @@ function CorporateWizardModal({ isOpen, onClose, isMobile }: any) {
           inset: 0,
           background: "rgba(28, 16, 9, 0.7)",
           backdropFilter: "blur(6px)",
-          
         }}
       />
       <motion.div
@@ -1222,19 +1226,18 @@ function CorporateWizardModal({ isOpen, onClose, isMobile }: any) {
             <path d="M1 1l12 12M1 13L13 1" />
           </svg>
         </button>
-        <div style={{ padding: "40px" ,}}>
-          <div style={{ textAlign: "center", marginBottom: 32, }}>
+        <div style={{ padding: "40px" }}>
+          <div style={{ textAlign: "center", marginBottom: 32 }}>
             <h2
               style={{
                 fontFamily: "'Playfair Display',serif",
                 fontSize: "2.2rem",
                 color: "#1C1009",
                 margin: "0 0 8px",
-                overflowX: "auto"
+                overflowX: "auto",
               }}
             >
-              Korporativ  {" "}
-              Sifariş
+              Korporativ Sifariş
             </h2>
             {!submitted && (
               <p
@@ -1530,7 +1533,7 @@ function CorporateWizardModal({ isOpen, onClose, isMobile }: any) {
                                 onChange={(v: string) =>
                                   setContact("company", v)
                                 }
-                                placeholder="Bloomberry MMC"
+                                placeholder="Boombery MMC"
                               />
                               <LuxInput
                                 label="Əlaqədar Şəxs *"
@@ -1774,8 +1777,7 @@ export default function CorporateGifting() {
             lineHeight: 1.1,
           }}
         >
-          Korporativ  {" "}
-          Sifarişlər
+          Korporativ Sifarişlər
         </h2>
         <p
           style={{

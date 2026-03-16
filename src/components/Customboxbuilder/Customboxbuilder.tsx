@@ -168,7 +168,7 @@ function OptionCard({
   // Bütün addımlarda eyni sabit hündürlük — şəkil ölçüsündən asılı olmamalı
   const CARD_HEIGHT = isMobile ? 170 : 192;
   const IMG_HEIGHT = isMobile ? 80 : 96;
-  
+
   return (
     <motion.button
       onClick={onSelect}
@@ -423,7 +423,7 @@ export default function CustomBoxBuilder() {
               margin: 0,
             }}
           >
-            Bloomberry Xüsusi Sifariş
+            Boombery Xüsusi Sifariş
           </p>
           <div style={{ height: 1, width: 28, background: "#C9A96E" }} />
         </div>
